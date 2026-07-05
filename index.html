@@ -1,87 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="7; url=https://pbscompany.com/">
-    <style>
-      body {
-        background: #0b0f19;
-        color: #ffffff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-      .card {
-        background: linear-gradient(145deg, #1e253c, #151a2a);
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.3);
-        border: 2px solid #ffd700;
-        text-align: center;
-        max-width: 600px;
-        position: relative;
-        overflow: hidden;
-      }
-      /* Holographic sweeping shine effect */
-      .card::before {
-        content: '';
-        position: absolute;
-        top: -100%;
-        left: -100%;
-        width: 300%;
-        height: 300%;
-        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-        transform: rotate(45deg);
-        animation: holo 3s infinite linear;
-        pointer-events: none;
-      }
-      @keyframes holo {
-        0% { transform: translate(-30%, -30%) rotate(45deg); }
-        100% { transform: translate(30%, 30%) rotate(45deg); }
-      }
-      h1 {
-        color: #ffd700;
-        font-size: 2.5rem;
-        margin: 0 0 20px 0;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-      }
-      p.message {
-        font-size: 1.4rem;
-        line-height: 1.6;
-        color: #e0e6ed;
-        margin-bottom: 30px;
-      }
-      p.redirect {
-        font-size: 0.9rem;
-        color: #8892b0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .gem-mint {
-        display: inline-block;
-        background: #e74c3c;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-        letter-spacing: 1.5px;
-        border: 1px solid #c0392b;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="card">
-      <div class="gem-mint">PSA GEM MT 10 ULTIMATUM</div>
-      <h1>Listen Up, Steve</h1>
-      <p class="message">You either need to sell Travis those cards, come to Collect'con next week, or you are getting a terrible review.<br><br><strong>Choose wisely.</strong></p>
-      <p class="redirect">Forwarding to pbscompany.com in 7 seconds...</p>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokemonCards.net | The Card Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1021;
+    --panel: #161b33;
+    --panel-2: #1d2340;
+    --gold: #ffd447;
+    --holo-a: #6ee7ff;
+    --holo-b: #c084fc;
+    --holo-c: #f472b6;
+    --text: #eef1ff;
+    --muted: #8b93b8;
+    --up: #4ade80;
+    --down: #f87171;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ============ FAKE STOREFRONT ============ */
+  #storefront { transition: filter .6s ease; }
+
+  .ticker {
+    background: #090c1a;
+    border-bottom: 1px solid #232a4d;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 7px 0;
+  }
+  .ticker-track { display: inline-block; animation: scroll 28s linear infinite; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker span { margin: 0 22px; color: var(--muted); }
+  .ticker .up { color: var(--up); }
+  .ticker .down { color: var(--down); }
+
+  nav {
+    display: flex; align-items: center; gap: 28px;
+    padding: 16px 5vw;
+    background: rgba(13,16,33,.9);
+    border-bottom: 1px solid #232a4d;
+  }
+  .logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -.5px;
+  }
+  .logo em { font-style: normal; color: var(--gold); }
+  .navlinks { display: flex; gap: 22px; font-size: 14px; color: var(--muted); }
+  .navlinks span:hover { color: var(--text); cursor: pointer; }
+  .search {
+    margin-left: auto;
+    background: var(--panel);
+    border: 1px solid #2b3358;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 220px;
+  }
+  .cart {
+    background: var(--gold); color: #1a1400;
+    font-weight: 700; font-size: 13px;
+    padding: 9px 18px; border-radius: 999px;
+  }
+
+  .hero {
+    padding: 54px 5vw 30px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(30px, 4.5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -1px;
+  }
+  .hero h1 .shine {
+    background: linear-gradient(100deg, var(--holo-a), var(--holo-b), var(--holo-c), var(--holo-a));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holoflow 4s linear infinite;
+  }
+  @keyframes holoflow { to { background-position: 300% 0; } }
+  .hero p { color: var(--muted); margin-top: 14px; max-width: 46ch; font-size: 15px; line-height: 1.6; }
+  .hero-cta { margin-top: 26px; display: flex; gap: 12px; }
+  .btn-gold {
+    background: var(--gold); color: #1a1400; font-weight: 700;
+    padding: 13px 26px; border-radius: 10px; font-size: 14px; border: none; cursor: pointer;
+  }
+  .btn-ghost {
+    background: transparent; color: var(--text); border: 1px solid #384174;
+    padding: 13px 26px; border-radius: 10px; font-size: 14px; cursor: pointer;
+  }
+
+  .cardgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; perspective: 900px; }
+  .tcg-card {
+    aspect-ratio: 5/7;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,.14);
+    position: relative;
+    overflow: hidden;
+    background: var(--panel-2);
+    transform: rotateY(-8deg) rotateX(3deg);
+    box-shadow: 0 24px 40px rgba(0,0,0,.5);
+  }
+  .tcg-card:nth-child(2) { transform: rotateY(0) translateY(-14px); }
+  .tcg-card:nth-child(3) { transform: rotateY(8deg) rotateX(3deg); }
+  .tcg-card .art {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--holo-a), var(--holo-b) 45%, var(--holo-c));
+    opacity: .85;
+  }
+  .tcg-card:nth-child(2) .art { background: linear-gradient(135deg, #fbbf24, #f97316 55%, #ef4444); }
+  .tcg-card:nth-child(3) .art { background: linear-gradient(135deg, #34d399, #06b6d4 55%, #3b82f6); }
+  .tcg-card::after {
+    content: '';
+    position: absolute; inset: -60%;
+    background: linear-gradient(60deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%);
+    animation: sweep 3.2s ease-in-out infinite;
+  }
+  @keyframes sweep { 0% { transform: translateX(-60%); } 60%, 100% { transform: translateX(60%); } }
+  .tcg-card .label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(9,12,26,.85);
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+  }
+
+  .row { padding: 10px 5vw 70px; }
+  .row h2 { font-family: 'Archivo Black', sans-serif; font-size: 20px; margin-bottom: 18px; }
+  .listings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .listing {
+    background: var(--panel);
+    border: 1px solid #262e55;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .listing .thumb {
+    aspect-ratio: 5/7; border-radius: 8px; margin-bottom: 12px;
+    background: linear-gradient(160deg, #2b3358, #171c36);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px;
+  }
+  .listing h3 { font-size: 14px; margin-bottom: 4px; }
+  .listing .grade { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); }
+  .listing .price { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); font-size: 15px; }
+
+  /* ============ TAKEOVER ============ */
+  #takeover {
+    position: fixed; inset: 0; z-index: 50;
+    display: none;
+    align-items: center; justify-content: center;
+    background: rgba(6,8,18,.55);
+    backdrop-filter: blur(2px);
+  }
+  #takeover.active { display: flex; }
+
+  .glitch-flash {
+    position: fixed; inset: 0; z-index: 60;
+    background: #fff; opacity: 0; pointer-events: none;
+  }
+
+  .slab {
+    width: min(680px, 92vw);
+    background: linear-gradient(150deg, #1b2140, #10142b);
+    border: 3px solid var(--gold);
+    border-radius: 18px;
+    padding: 44px 48px 38px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 6px rgba(255,212,71,.12), 0 40px 90px rgba(0,0,0,.75), 0 0 60px rgba(255,212,71,.25);
+    transform: scale(.7) rotate(-4deg);
+    opacity: 0;
+    transition: transform .5s cubic-bezier(.2,1.6,.4,1), opacity .3s;
+  }
+  #takeover.active .slab { transform: scale(1) rotate(0deg); opacity: 1; }
+  .slab::before {
+    content: '';
+    position: absolute; inset: -80%;
+    background: conic-gradient(from 0deg, transparent, rgba(110,231,255,.12), transparent 30%, rgba(192,132,252,.12), transparent 60%, rgba(244,114,182,.12), transparent);
+    animation: spin 7s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .slab-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2.5px;
+    background: #e5484d;
+    padding: 7px 16px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { box-shadow: 0 0 22px rgba(229,72,77,.8); } }
+
+  .slab-owner {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+  .slab-owner b { color: var(--holo-a); }
+
+  .slab h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(30px, 5.5vw, 46px);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 20px;
+    background: linear-gradient(100deg, #fff, var(--gold) 40%, #fff 70%, var(--gold));
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holoflow 3s linear infinite;
+  }
+  .slab .msg {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #d9deff;
+    max-width: 48ch;
+    margin: 0 auto 8px;
+  }
+  .slab .msg strong { color: var(--gold); }
+  .choose {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    margin: 18px 0 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .opt {
+    background: rgba(255,255,255,.05);
+    border: 1px solid #333c6e;
+    border-radius: 10px;
+    padding: 14px 10px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+  .opt .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--holo-a);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+  .opt.bad .num { color: var(--down); }
+
+  .countdown {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .countdown b { color: var(--gold); font-size: 15px; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; }
+    .listings { grid-template-columns: repeat(2, 1fr); }
+    .navlinks, .search { display: none; }
+    .options { grid-template-columns: 1fr; }
+    .slab { padding: 34px 24px 30px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="storefront">
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>CHARIZARD BASE SET PSA 10 <b class="up">▲ $8,400</b></span>
+      <span>UMBREON VMAX ALT <b class="up">▲ $1,290</b></span>
+      <span>PIKACHU ILLUSTRATOR <b class="up">▲ ASK</b></span>
+      <span>MOONBREON GEM RATE <b class="down">▼ 12%</b></span>
+      <span>LUGIA 1ST ED NEO <b class="up">▲ $2,050</b></span>
+      <span>151 BOOSTER BOX <b class="down">▼ $139</b></span>
+      <span>CHARIZARD BASE SET PSA 10 <b class="up">▲ $8,400</b></span>
+      <span>UMBREON VMAX ALT <b class="up">▲ $1,290</b></span>
+      <span>PIKACHU ILLUSTRATOR <b class="up">▲ ASK</b></span>
+      <span>MOONBREON GEM RATE <b class="down">▼ 12%</b></span>
+      <span>LUGIA 1ST ED NEO <b class="up">▲ $2,050</b></span>
+      <span>151 BOOSTER BOX <b class="down">▼ $139</b></span>
     </div>
-  </body>
+  </div>
+
+  <nav>
+    <div class="logo">Pokemon<em>Cards</em>.net</div>
+    <div class="navlinks"><span>Marketplace</span><span>Grading</span><span>Vault</span><span>Live Breaks</span></div>
+    <div class="search">Search 2.4M listings...</div>
+    <div class="cart">Cart (0)</div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h1>The market for <span class="shine">gem mint</span> chasers.</h1>
+      <p>Buy, sell, and vault graded slabs with real-time comps pulled from every major auction house. Trusted by 400,000 collectors worldwide.</p>
+      <div class="hero-cta">
+        <button class="btn-gold">Browse the Vault</button>
+        <button class="btn-ghost">Sell your slabs</button>
+      </div>
+    </div>
+    <div class="cardgrid">
+      <div class="tcg-card"><div class="art"></div><div class="label">HOLO RARE · PSA 10</div></div>
+      <div class="tcg-card"><div class="art"></div><div class="label">ALT ART · CGC 9.5</div></div>
+      <div class="tcg-card"><div class="art"></div><div class="label">1ST EDITION · BGS 9</div></div>
+    </div>
+  </section>
+
+  <section class="row">
+    <h2>🔥 Trending Slabs</h2>
+    <div class="listings">
+      <div class="listing"><div class="thumb">🐉</div><h3>Charizard Base Set Holo</h3><div class="grade">PSA GEM MT 10 · #4/102</div><div class="price">$8,400.00</div></div>
+      <div class="listing"><div class="thumb">🌙</div><h3>Umbreon VMAX Alt Art</h3><div class="grade">PSA GEM MT 10 · Evolving Skies</div><div class="price">$1,290.00</div></div>
+      <div class="listing"><div class="thumb">🌊</div><h3>Lugia Neo Genesis 1st Ed</h3><div class="grade">CGC 9 MINT · #9/111</div><div class="price">$2,050.00</div></div>
+      <div class="listing"><div class="thumb">⚡</div><h3>Pikachu Gold Star</h3><div class="grade">BGS 9.5 GEM MINT</div><div class="price">$3,775.00</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="glitch-flash" id="flash"></div>
+
+<div id="takeover">
+  <div class="slab">
+    <div class="slab-tag">🚨 SITE ACQUIRED · UNDER NEW OWNERSHIP 🚨</div>
+    <div class="slab-owner">This domain was purchased with the <b>ENTIRE LIFE SAVINGS</b> of one man. For one reason.</div>
+    <h1>LISTEN UP, STEVE</h1>
+    <p class="msg">Travis didn't buy one of the most popular Pokemon websites on Earth for the traffic. He bought it to deliver <strong>one message</strong>, and you're reading it.</p>
+    <div class="choose">Choose Wisely:</div>
+    <div class="options">
+      <div class="opt"><span class="num">OPTION 01</span>Sell Travis the cards. You know the ones.</div>
+      <div class="opt"><span class="num">OPTION 02</span>Show up to Collect'con next week. No excuses.</div>
+      <div class="opt bad"><span class="num">OPTION 03</span>Receive a review so terrible it gets its own grading scale.</div>
+    </div>
+    <div class="countdown">Forwarding you somewhere less expensive in <b id="count">8</b>s</div>
+  </div>
+</div>
+
+<script>
+  // Let the fake storefront breathe for a few seconds, then hit the takeover
+  const REVEAL_DELAY = 3500;
+  const REDIRECT_SECONDS = 8;
+
+  setTimeout(() => {
+    const flash = document.getElementById('flash');
+    flash.style.transition = 'opacity .08s';
+    flash.style.opacity = '1';
+    setTimeout(() => {
+      flash.style.opacity = '0';
+      document.getElementById('storefront').style.filter = 'blur(6px) brightness(.45)';
+      document.getElementById('takeover').classList.add('active');
+      startCountdown();
+    }, 90);
+  }, REVEAL_DELAY);
+
+  function startCountdown() {
+    let n = REDIRECT_SECONDS;
+    const el = document.getElementById('count');
+    const t = setInterval(() => {
+      n--;
+      el.textContent = n;
+      if (n <= 0) {
+        clearInterval(t);
+        window.location.href = 'https://pbscompany.com/';
+      }
+    }, 1000);
+  }
+</script>
+</body>
 </html>
