@@ -1,12 +1,87 @@
-HTML
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <!-- The content="5" tells the browser to wait 5 seconds -->
-    <meta http-equiv="refresh" content="5; url=https://pbscompany.com/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="7; url=https://pbscompany.com/">
+    <style>
+      body {
+        background: #0b0f19;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .card {
+        background: linear-gradient(145deg, #1e253c, #151a2a);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.3);
+        border: 2px solid #ffd700;
+        text-align: center;
+        max-width: 600px;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Holographic sweeping shine effect */
+      .card::before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        transform: rotate(45deg);
+        animation: holo 3s infinite linear;
+        pointer-events: none;
+      }
+      @keyframes holo {
+        0% { transform: translate(-30%, -30%) rotate(45deg); }
+        100% { transform: translate(30%, 30%) rotate(45deg); }
+      }
+      h1 {
+        color: #ffd700;
+        font-size: 2.5rem;
+        margin: 0 0 20px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      p.message {
+        font-size: 1.4rem;
+        line-height: 1.6;
+        color: #e0e6ed;
+        margin-bottom: 30px;
+      }
+      p.redirect {
+        font-size: 0.9rem;
+        color: #8892b0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .gem-mint {
+        display: inline-block;
+        background: #e74c3c;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        letter-spacing: 1.5px;
+        border: 1px solid #c0392b;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hey Steve ... look what I got</h1>
-    <p>Redirecting you to pbscompany.com in 5 seconds...</p>
+    <div class="card">
+      <div class="gem-mint">PSA GEM MT 10 ULTIMATUM</div>
+      <h1>Listen Up, Steve</h1>
+      <p class="message">You either need to sell Travis those cards, come to Collect'con next week, or you are getting a terrible review.<br><br><strong>Choose wisely.</strong></p>
+      <p class="redirect">Forwarding to pbscompany.com in 7 seconds...</p>
+    </div>
   </body>
 </html>
