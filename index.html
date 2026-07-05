@@ -362,14 +362,13 @@
       <div class="opt"><span class="num">OPTION 02</span>Show up to Collect'con next week. No excuses.</div>
       <div class="opt bad"><span class="num">OPTION 03</span>Receive a review so terrible it gets its own grading scale.</div>
     </div>
-    <div class="countdown">Forwarding you somewhere less expensive in <b id="count">8</b>s</div>
+    <div class="countdown">NO ESCAPE. NO FORWARD. JUST THE MESSAGE.</div>
   </div>
 </div>
 
 <script>
   // Let the fake storefront breathe for a few seconds, then hit the takeover
   const REVEAL_DELAY = 3500;
-  const REDIRECT_SECONDS = 8;
 
   setTimeout(() => {
     const flash = document.getElementById('flash');
@@ -379,22 +378,8 @@
       flash.style.opacity = '0';
       document.getElementById('storefront').style.filter = 'blur(6px) brightness(.45)';
       document.getElementById('takeover').classList.add('active');
-      startCountdown();
     }, 90);
   }, REVEAL_DELAY);
-
-  function startCountdown() {
-    let n = REDIRECT_SECONDS;
-    const el = document.getElementById('count');
-    const t = setInterval(() => {
-      n--;
-      el.textContent = n;
-      if (n <= 0) {
-        clearInterval(t);
-        window.location.href = 'https://pbscompany.com/';
-      }
-    }, 1000);
-  }
 </script>
 </body>
 </html>
