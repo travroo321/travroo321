@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vault Guardian | Coming Soon</title>
+<meta name="robots" content="noindex">
+<!-- Auto-redirect fallback (works even with JavaScript disabled) -->
+<meta http-equiv="refresh" content="8; url=https://vault-guardian.net/#early-access">
+<style>
+  /* Swap these three values to match the vault-guardian.net palette */
+  :root { --bg:#101820; --text:#ece7dd; --accent:#c9a24b; --muted:#8f97a3; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    background:var(--bg); color:var(--text);
+    font-family:Georgia, 'Times New Roman', serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:24px; text-align:center;
+  }
+  .wrap { max-width:640px; }
+  .brand {
+    font-family:Arial, Helvetica, sans-serif; letter-spacing:.35em;
+    font-size:13px; color:var(--accent); text-transform:uppercase; margin-bottom:22px;
+  }
+  h1 { font-size:clamp(28px, 6vw, 44px); line-height:1.15; margin-bottom:16px; font-weight:normal; }
+  p { color:var(--muted); font-size:17px; line-height:1.6; margin-bottom:10px; }
+  .cta {
+    display:inline-block; margin-top:22px; padding:14px 30px;
+    border:1px solid var(--accent); color:var(--accent); text-decoration:none;
+    letter-spacing:.08em; text-transform:uppercase;
+    font-family:Arial, Helvetica, sans-serif; font-size:13px;
+  }
+  .cta:hover, .cta:focus { background:var(--accent); color:var(--bg); outline:2px solid var(--accent); outline-offset:2px; }
+  .count { margin-top:20px; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; }
+  .count a { color:var(--accent); }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">Vault Guardian</div>
+    <h1>A new way to protect and clean your TCG cards is coming soon.</h1>
+    <p>Reach out for early release information and to qualify for a free limited trial of Noir Black &mdash; Recovery Edition, open to the first 250 sign-ups.</p>
+    <a class="cta" href="https://vault-guardian.net/#early-access">Request Early Access</a>
+    <p class="count">Taking you to <a href="https://vault-guardian.net/">vault-guardian.net</a> in <span id="s">8</span> seconds.</p>
+  </main>
+<script>
+  (function () {
+    var s = 8;
+    var el = document.getElementById('s');
+    var t = setInterval(function () {
+      s = s - 1;
+      if (el) { el.textContent = s; }
+      if (s <= 0) {
+        clearInterval(t);
+        window.location.href = 'https://vault-guardian.net/#early-access';
+      }
+    }, 1000);
+  })();
+</script>
+</body>
+</html>
